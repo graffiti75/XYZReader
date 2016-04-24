@@ -1,4 +1,5 @@
 <resources>
+    <!-- Application -->
 
     <string name="app_name">XYZ Reader</string>
     <string name="welcome_xyz_reader">Welcome to XYZ Reader!</string>
@@ -9,4 +10,9 @@
 
     <string name="up">Up</string>
 
+    <!-- Fonts -->
+
+    <string name="regular_font_path">fonts/Roboto-Regular.ttf</string>
+    <string name="bold_font_path">fonts/Roboto-Bold.ttf</string>
+    <string name="medium_font_path">fonts/Roboto-Medium.ttf</string>
 </resources>

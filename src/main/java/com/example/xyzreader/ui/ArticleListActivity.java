@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
@@ -31,25 +33,29 @@ import com.example.xyzreader.data.UpdaterService;
  * touched, lead to a {@link ArticleDetailActivity} representing item details. On tablets, the
  * activity presents a grid of items as cards.
  */
-public class ArticleListActivity extends ActionBarActivity implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+public class ArticleListActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    //--------------------------------------------------
+    // Attributes
+    //--------------------------------------------------
 
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
+    private boolean mIsRefreshing = false;
+
+    //--------------------------------------------------
+    // Activity Life Cycle
+    //--------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
-
-        final View toolbarContainerView = findViewById(R.id.toolbar_container);
-
+        initToolbar();
+        mToolbar = (Toolbar) findViewById(R.id.id_toolbar);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         getLoaderManager().initLoader(0, null, this);
 
@@ -58,15 +64,10 @@ public class ArticleListActivity extends ActionBarActivity implements
         }
     }
 
-    private void refresh() {
-        startService(new Intent(this, UpdaterService.class));
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
-        registerReceiver(mRefreshingReceiver,
-                new IntentFilter(UpdaterService.BROADCAST_ACTION_STATE_CHANGE));
+        registerReceiver(mRefreshingReceiver, new IntentFilter(UpdaterService.BROADCAST_ACTION_STATE_CHANGE));
     }
 
     @Override
@@ -75,7 +76,20 @@ public class ArticleListActivity extends ActionBarActivity implements
         unregisterReceiver(mRefreshingReceiver);
     }
 
-    private boolean mIsRefreshing = false;
+    //--------------------------------------------------
+    // Methods
+    //--------------------------------------------------
+
+    private void refresh() {
+        startService(new Intent(this, UpdaterService.class));
+    }
+
+    public void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+    }
 
     private BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
         @Override
@@ -89,6 +103,15 @@ public class ArticleListActivity extends ActionBarActivity implements
 
     private void updateRefreshingUI() {
         mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
+    }
+
+    //--------------------------------------------------
+    // Loader Manager
+    //--------------------------------------------------
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mRecyclerView.setAdapter(null);
     }
 
     @Override
@@ -107,10 +130,9 @@ public class ArticleListActivity extends ActionBarActivity implements
         mRecyclerView.setLayoutManager(sglm);
     }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mRecyclerView.setAdapter(null);
-    }
+    //--------------------------------------------------
+    // Adapter Inner Class
+    //--------------------------------------------------
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
         private Cursor mCursor;
@@ -132,8 +154,7 @@ public class ArticleListActivity extends ActionBarActivity implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+                    startActivity(new Intent(Intent.ACTION_VIEW, ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
                 }
             });
             return vh;
@@ -143,13 +164,10 @@ public class ArticleListActivity extends ActionBarActivity implements
         public void onBindViewHolder(ViewHolder holder, int position) {
             mCursor.moveToPosition(position);
             holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-            holder.subtitleView.setText(
-                    DateUtils.getRelativeTimeSpanString(
-                            mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
-                            System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                            DateUtils.FORMAT_ABBREV_ALL).toString()
-                            + " by "
-                            + mCursor.getString(ArticleLoader.Query.AUTHOR));
+            holder.subtitleView.setText(DateUtils.getRelativeTimeSpanString(
+                mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),System.currentTimeMillis(),
+                DateUtils.HOUR_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString() + " by " +
+                mCursor.getString(ArticleLoader.Query.AUTHOR));
             holder.thumbnailView.setImageUrl(
                     mCursor.getString(ArticleLoader.Query.THUMB_URL),
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
@@ -161,6 +179,10 @@ public class ArticleListActivity extends ActionBarActivity implements
             return mCursor.getCount();
         }
     }
+
+    //--------------------------------------------------
+    // View Holder Inner Class
+    //--------------------------------------------------
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public DynamicHeightNetworkImageView thumbnailView;
