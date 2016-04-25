@@ -27,9 +27,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
-import com.example.xyzreader.ui.DrawInsetsFrameLayout;
+import com.example.xyzreader.ui.view.DrawInsetsFrameLayout;
 import com.example.xyzreader.ui.ImageLoaderHelper;
-import com.example.xyzreader.ui.ObservableScrollView;
+import com.example.xyzreader.ui.view.ObservableScrollView;
 import com.example.xyzreader.ui.activity.ArticleDetailActivity;
 import com.example.xyzreader.ui.activity.ArticleListActivity;
 

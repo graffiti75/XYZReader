@@ -23,7 +23,7 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
-import com.example.xyzreader.ui.DynamicHeightNetworkImageView;
+import com.example.xyzreader.ui.view.DynamicHeightNetworkImageView;
 import com.example.xyzreader.ui.ImageLoaderHelper;
 
 /**
