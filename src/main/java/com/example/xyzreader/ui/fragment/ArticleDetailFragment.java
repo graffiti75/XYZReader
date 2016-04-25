@@ -1,4 +1,4 @@
-package com.example.xyzreader.ui;
+package com.example.xyzreader.ui.fragment;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
@@ -27,6 +27,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+import com.example.xyzreader.ui.DrawInsetsFrameLayout;
+import com.example.xyzreader.ui.ImageLoaderHelper;
+import com.example.xyzreader.ui.ObservableScrollView;
+import com.example.xyzreader.ui.activity.ArticleDetailActivity;
+import com.example.xyzreader.ui.activity.ArticleListActivity;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -190,11 +195,15 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
             return;
         }
 
+        Typeface fontType = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Bold.ttf");
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
-        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
+
+        bodyView.setTypeface(fontType);
+        bylineView.setTypeface(fontType);
+        titleView.setTypeface(fontType);
 
         if (mCursor != null) {
             mRootView.setAlpha(0);

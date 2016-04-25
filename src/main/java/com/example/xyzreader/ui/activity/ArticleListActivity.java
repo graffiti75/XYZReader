@@ -1,4 +1,4 @@
-package com.example.xyzreader.ui;
+package com.example.xyzreader.ui.activity;
 
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
@@ -7,18 +7,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
-import android.util.TypedValue;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -27,6 +23,8 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
+import com.example.xyzreader.ui.DynamicHeightNetworkImageView;
+import com.example.xyzreader.ui.ImageLoaderHelper;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -169,9 +167,13 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
                 mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),System.currentTimeMillis(),
                 DateUtils.HOUR_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString() + " by " +
                 mCursor.getString(ArticleLoader.Query.AUTHOR));
-            holder.thumbnailView.setImageUrl(
-                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
-                    ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
+
+            Typeface fontType = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+            holder.titleView.setTypeface(fontType);
+            holder.subtitleView.setTypeface(fontType);
+
+            holder.thumbnailView.setImageUrl(mCursor.getString(ArticleLoader.Query.THUMB_URL),
+                ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
         }
 
