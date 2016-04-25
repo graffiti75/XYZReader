@@ -23,8 +23,8 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
-import com.example.xyzreader.ui.view.DynamicHeightNetworkImageView;
 import com.example.xyzreader.ui.ImageLoaderHelper;
+import com.example.xyzreader.ui.view.DynamicHeightNetworkImageView;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -38,7 +38,6 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
     // Attributes
     //--------------------------------------------------
 
-    private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private boolean mIsRefreshing = false;
@@ -53,8 +52,7 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
         setContentView(R.layout.activity_article_list);
 
         initToolbar();
-        mToolbar = (Toolbar) findViewById(R.id.id_toolbar);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         getLoaderManager().initLoader(0, null, this);
 

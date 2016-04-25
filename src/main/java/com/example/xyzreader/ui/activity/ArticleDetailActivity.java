@@ -34,7 +34,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
     private Cursor mCursor;
     private long mStartId;
 
-    private long mSelectedItemId;
     private int mSelectedItemUpButtonFloor = Integer.MAX_VALUE;
     private int mTopInset;
 
@@ -75,8 +74,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
                 if (mCursor != null) {
                     mCursor.moveToPosition(position);
                 }
-                mSelectedItemId = mCursor.getLong(ArticleLoader.Query._ID);
-                updateUpButtonPosition();
             }
         });
 
@@ -106,7 +103,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getData() != null) {
                 mStartId = ItemsContract.Items.getItemId(getIntent().getData());
-                mSelectedItemId = mStartId;
             }
         }
     }
@@ -114,13 +110,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
     //--------------------------------------------------
     // Methods
     //--------------------------------------------------
-
-    public void onUpButtonFloorChanged(long itemId, ArticleDetailFragment fragment) {
-        if (itemId == mSelectedItemId) {
-            mSelectedItemUpButtonFloor = fragment.getUpButtonFloor();
-            updateUpButtonPosition();
-        }
-    }
 
     private void updateUpButtonPosition() {
         int upButtonNormalBottom = mTopInset + mUpButton.getHeight();
@@ -177,7 +166,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
             super.setPrimaryItem(container, position, object);
             ArticleDetailFragment fragment = (ArticleDetailFragment) object;
             if (fragment != null) {
-                mSelectedItemUpButtonFloor = fragment.getUpButtonFloor();
                 updateUpButtonPosition();
             }
         }

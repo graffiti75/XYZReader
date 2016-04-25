@@ -22,14 +22,14 @@ public class ArticleLoader extends CursorLoader {
 
     public interface Query {
         String[] PROJECTION = {
-                ItemsContract.Items._ID,
-                ItemsContract.Items.TITLE,
-                ItemsContract.Items.PUBLISHED_DATE,
-                ItemsContract.Items.AUTHOR,
-                ItemsContract.Items.THUMB_URL,
-                ItemsContract.Items.PHOTO_URL,
-                ItemsContract.Items.ASPECT_RATIO,
-                ItemsContract.Items.BODY,
+            ItemsContract.Items._ID,
+            ItemsContract.Items.TITLE,
+            ItemsContract.Items.PUBLISHED_DATE,
+            ItemsContract.Items.AUTHOR,
+            ItemsContract.Items.THUMB_URL,
+            ItemsContract.Items.PHOTO_URL,
+            ItemsContract.Items.ASPECT_RATIO,
+            ItemsContract.Items.BODY,
         };
 
         int _ID = 0;

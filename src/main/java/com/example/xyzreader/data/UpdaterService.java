@@ -30,6 +30,7 @@ public class UpdaterService extends IntentService {
         super(TAG);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onHandleIntent(Intent intent) {
         Time time = new Time();
@@ -40,7 +41,6 @@ public class UpdaterService extends IntentService {
             Log.w(TAG, "Not online, not refreshing.");
             return;
         }
-
         sendStickyBroadcast(new Intent(BROADCAST_ACTION_STATE_CHANGE).putExtra(EXTRA_REFRESHING, true));
 
         // Don't even inspect the intent, we only do one thing, and that's fetch content.
@@ -55,7 +55,6 @@ public class UpdaterService extends IntentService {
             if (array == null) {
                 throw new JSONException("Invalid parsed item array" );
             }
-
             for (int i = 0; i < array.length(); i++) {
                 ContentValues values = new ContentValues();
                 JSONObject object = array.getJSONObject(i);
@@ -70,13 +69,10 @@ public class UpdaterService extends IntentService {
                 values.put(ItemsContract.Items.PUBLISHED_DATE, time.toMillis(false));
                 cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
             }
-
             getContentResolver().applyBatch(ItemsContract.CONTENT_AUTHORITY, cpo);
-
         } catch (JSONException | RemoteException | OperationApplicationException e) {
             Log.e(TAG, "Error updating content.", e);
         }
-
         sendStickyBroadcast(new Intent(BROADCAST_ACTION_STATE_CHANGE).putExtra(EXTRA_REFRESHING, false));
     }
 }

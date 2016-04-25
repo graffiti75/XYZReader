@@ -15,7 +15,6 @@ public class ImageLoaderHelper {
         if (sInstance == null) {
             sInstance = new ImageLoaderHelper(context.getApplicationContext());
         }
-
         return sInstance;
     }
 

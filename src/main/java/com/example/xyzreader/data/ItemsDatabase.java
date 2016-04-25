@@ -17,16 +17,16 @@ public class ItemsDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + Tables.ITEMS + " ("
-                + ItemsContract.ItemsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + ItemsContract.ItemsColumns.SERVER_ID + " TEXT,"
-                + ItemsContract.ItemsColumns.TITLE + " TEXT NOT NULL,"
-                + ItemsContract.ItemsColumns.AUTHOR + " TEXT NOT NULL,"
-                + ItemsContract.ItemsColumns.BODY + " TEXT NOT NULL,"
-                + ItemsContract.ItemsColumns.THUMB_URL + " TEXT NOT NULL,"
-                + ItemsContract.ItemsColumns.PHOTO_URL + " TEXT NOT NULL,"
-                + ItemsContract.ItemsColumns.ASPECT_RATIO + " REAL NOT NULL DEFAULT 1.5,"
-                + ItemsContract.ItemsColumns.PUBLISHED_DATE + " INTEGER NOT NULL DEFAULT 0"
-                + ")" );
+            + ItemsContract.ItemsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + ItemsContract.ItemsColumns.SERVER_ID + " TEXT,"
+            + ItemsContract.ItemsColumns.TITLE + " TEXT NOT NULL,"
+            + ItemsContract.ItemsColumns.AUTHOR + " TEXT NOT NULL,"
+            + ItemsContract.ItemsColumns.BODY + " TEXT NOT NULL,"
+            + ItemsContract.ItemsColumns.THUMB_URL + " TEXT NOT NULL,"
+            + ItemsContract.ItemsColumns.PHOTO_URL + " TEXT NOT NULL,"
+            + ItemsContract.ItemsColumns.ASPECT_RATIO + " REAL NOT NULL DEFAULT 1.5,"
+            + ItemsContract.ItemsColumns.PUBLISHED_DATE + " INTEGER NOT NULL DEFAULT 0"
+            + ")" );
     }
 
     @Override
