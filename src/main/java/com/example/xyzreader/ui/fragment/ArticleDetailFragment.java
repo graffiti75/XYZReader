@@ -7,7 +7,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -27,11 +26,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
-import com.example.xyzreader.ui.view.DrawInsetsFrameLayout;
 import com.example.xyzreader.ui.ImageLoaderHelper;
-import com.example.xyzreader.ui.view.ObservableScrollView;
 import com.example.xyzreader.ui.activity.ArticleDetailActivity;
 import com.example.xyzreader.ui.activity.ArticleListActivity;
+import com.example.xyzreader.ui.view.ObservableScrollView;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -58,7 +56,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     private View mRootView;
     private int mMutedColor = 0xFF333333;
     private ObservableScrollView mScrollView;
-    private DrawInsetsFrameLayout mDrawInsetsFrameLayout;
+//    private DrawInsetsFrameLayout mDrawInsetsFrameLayout;
     private ColorDrawable mStatusBarColorDrawable;
 
     private int mTopInset;
@@ -122,6 +120,8 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
+
+        /*
         mDrawInsetsFrameLayout = (DrawInsetsFrameLayout)mRootView.findViewById(R.id.draw_insets_frame_layout);
         mDrawInsetsFrameLayout.setOnInsetsCallback(new DrawInsetsFrameLayout.OnInsetsCallback() {
             @Override
@@ -129,7 +129,9 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                 mTopInset = insets.top;
             }
         });
+        */
 
+        /*
         mScrollView = (ObservableScrollView) mRootView.findViewById(R.id.scrollview);
         mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
             @Override
@@ -140,6 +142,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                 updateStatusBar();
             }
         });
+        */
 
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
@@ -173,7 +176,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                 (int) (Color.green(mMutedColor) * 0.9), (int) (Color.blue(mMutedColor) * 0.9));
         }
         mStatusBarColorDrawable.setColor(color);
-        mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
+//        mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
     }
 
     static float progress(float v, float min, float max) {
@@ -195,7 +198,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
             return;
         }
 
-        Typeface fontType = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Bold.ttf");
+        Typeface fontType = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Regular.ttf");
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());

@@ -168,7 +168,7 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
                 DateUtils.HOUR_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString() + " by " +
                 mCursor.getString(ArticleLoader.Query.AUTHOR));
 
-            Typeface fontType = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+            Typeface fontType = Typeface.createFromAsset(getAssets(), "Roboto-Regular.ttf");
             holder.titleView.setTypeface(fontType);
             holder.subtitleView.setTypeface(fontType);
 
